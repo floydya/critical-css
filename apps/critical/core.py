@@ -1,5 +1,7 @@
 import subprocess
 
+from rest_framework import status
+
 
 def get_critical_css(css, url, width, height):
     penthouse = subprocess.Popen(
@@ -10,7 +12,8 @@ def get_critical_css(css, url, width, height):
     )
     stdout, stderr = penthouse.communicate()
     penthouse.wait()
-    assert not penthouse.returncode, \
-        f'Penthouse command failed ({penthouse.returncode}): {stderr}'
-    return stdout
-
+    if stderr:
+        return {
+            'content': stderr, 'status': status.HTTP_400_BAD_REQUEST
+        }
+    return {'content': stdout, 'status': 200}
