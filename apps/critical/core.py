@@ -10,7 +10,6 @@ def get_critical_css(css, url, width, height):
     )
     stdout, stderr = penthouse.communicate()
     penthouse.wait()
-    print(stderr)
     assert not penthouse.returncode, \
         f'Penthouse command failed ({penthouse.returncode}): {stderr}'
     return stdout
