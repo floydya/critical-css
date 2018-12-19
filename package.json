@@ -1,0 +1,15 @@
+{
+  "name": "critical",
+  "version": "1.0.0",
+  "description": "Critical CSS",
+  "main": "penthouse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "penthouse": "^1.10.2"
+  }
+}
