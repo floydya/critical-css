@@ -22,4 +22,4 @@ class CriticalAPIView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.validated_data.pop('token')
-        return HttpResponse(get_critical_css(**serializer.validated_data))
+        return HttpResponse(**get_critical_css(**serializer.validated_data))

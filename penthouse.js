@@ -7,15 +7,19 @@ let width = process.argv[4];
 let height = process.argv[5];
 
 fetch(css_url)
-    .then(resp => resp.text())
+    .then(resp => {
+        if (resp.status != 200) {
+            throw new Error("Not 200 response!");
+        }
+        return resp.text();
+    })
     .then(body => {
         penthouse({
             url: site_url,
             cssString: body,
             width: width,
             height: height
+        }).then(criticalCss => {
+            console.log(criticalCss)
         })
-            .then(criticalCss => {
-                console.log(criticalCss)
-            })
     });
