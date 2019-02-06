@@ -6,5 +6,6 @@ def generate_data_for_response(post_type, term_id, post_id, styles):
             'term_id': term_id,
             'post_id': post_id,
             'styles': styles
-        }
+        },
+        'status': 200
     }

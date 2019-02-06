@@ -25,5 +25,6 @@ def get_critical_css(css, url, width, height, post_type, term_id, post_id, hook)
         }
     else:
         response = generate_data_for_response(post_type, term_id, post_id, stdout)
+        print(response)
     requests.post(hook, data=response)
     return True
