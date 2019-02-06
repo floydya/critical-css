@@ -4,7 +4,7 @@ import requests
 from celery import Celery
 from rest_framework import status
 
-from apps.critical.core import generate_data_for_response
+from apps.critical.utils import generate_data_for_response
 
 app = Celery('tasks', broker='amqp://localhost')
 

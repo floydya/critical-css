@@ -7,45 +7,6 @@ from app.celery import get_critical_css
 
 __all__ = ('CriticalSerializer',)
 
-"""
-{
-    "token":"32423423424",
-    "height":"100000",
-    "width":"1920",
-    "style":"http:\/\/mysite.loc\/style.css",
-    "pages":[
-        {
-            "post_type":"works",
-            "term_id":"",
-            "post_id":"",
-            "url":""
-        },
-        {
-            "post_type":"",
-            "term_id":"123",
-            "post_id":"",
-            "url":""
-        }
-        {
-            "post_type":"",
-            "term_id":"",
-            "post_id":"123131",
-            "url":""
-        }
-    ]
-}
-
-{
-  "hook": "http://asdasdasd.ru/",
-  "token": "rc-%i915$h_$2bsgp)+q3b(+7s)hn^1dptl+f4hbd8kzi3_jo*",
-  "style": "http://asdasdasd.ru/asd.css",
-  "pages": [
-    {"post_type":"", "term_id":"", "post_id":"123131", "url":"http://asdasdasd.ru/"}
-  ]
-}
-
-"""
-
 
 class PageSerializer(serializers.Serializer):
     post_type = serializers.CharField(required=False, allow_blank=True)
