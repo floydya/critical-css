@@ -26,12 +26,10 @@ def get_critical_css(css, url, width, height, post_type, term_id, post_id, hook)
         code = 400
     else:
         response = {
-            'content': {
-                'post_type': post_type,
-                'term_id': term_id,
-                'post_id': post_id,
-                'styles': stdout
-            },
+            'post_type': post_type,
+            'term_id': term_id,
+            'post_id': post_id,
+            'styles': stdout,
             'status': 200
         }  # generate_data_for_response(post_type, term_id, post_id, stdout)
         code = 200
