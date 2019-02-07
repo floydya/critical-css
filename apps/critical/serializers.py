@@ -22,7 +22,7 @@ class PageSerializer(serializers.Serializer):
         ):
             raise serializers.ValidationError('post_type or term_id or post_id are empty.')
         try:
-            status_code = requests.get(attrs['url'], timeout=2).status_code
+            status_code = requests.get(attrs['url'], timeout=2, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}).status_code
         except requests.ConnectionError:
             status_code = "@Connection error/timeout@"
         if status_code != 200:
@@ -40,7 +40,7 @@ class CriticalSerializer(serializers.Serializer):
 
     def validate_hook(self, value):
         try:
-            response = requests.get(value, timeout=2)
+            response = requests.get(value, timeout=2, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
             if response.status_code != 200:
                 raise requests.ConnectionError
         except requests.ConnectionError:
