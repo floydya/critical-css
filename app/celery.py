@@ -33,7 +33,6 @@ def get_critical_css(css, url, width, height, post_type, term_id, post_id, hook,
         code = 200
     a = requests.post(hook, data=response, headers={
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-        'Authentication': f'Critical {token}'
+        'Critical': token
     })
-    print(a.content)
     return code
