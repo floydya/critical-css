@@ -25,12 +25,20 @@ def get_critical_css(css, url, width, height, post_type, term_id, post_id, hook)
         }
         code = 400
     else:
-        response = generate_data_for_response(post_type, term_id, post_id, stdout)
+        response = {
+            'content': {
+                'post_type': post_type,
+                'term_id': term_id,
+                'post_id': post_id,
+                'styles': stdout
+            },
+            'status': 200
+        }  # generate_data_for_response(post_type, term_id, post_id, stdout)
         code = 200
-    print(response)
-    a = requests.post(hook, json=response, headers={
+    #print(response)
+    a = requests.post(hook, data=response, headers={
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-        'Content-type': 'application/json'
+        #'Content-type': 'application/json'
     })
     print(a.content)
     return code
