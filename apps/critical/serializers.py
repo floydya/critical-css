@@ -62,6 +62,7 @@ class CriticalSerializer(serializers.Serializer):
                 page['post_type'],
                 page['term_id'],
                 page['post_id'],
-                validated_data['hook']
+                validated_data['hook'],
+                validated_data['token']
             )
         return object
