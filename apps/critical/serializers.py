@@ -38,19 +38,21 @@ class CriticalSerializer(serializers.Serializer):
     style = serializers.URLField(required=True, help_text='Ссылка на .css файл.')
     pages = PageSerializer(many=True, required=True)
 
-    def validate_hook(self, value):
+    def validate(self, attrs):
+        if attrs['token'] != settings.SECRET_KEY:
+            raise serializers.ValidationError('Token incorrect')
+
         try:
-            response = requests.get(value, timeout=2, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
+            response = requests.get(attrs['hook'], timeout=2, headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+                'Critical': attrs['token']
+            })
             if response.status_code != 200:
                 raise requests.ConnectionError
         except requests.ConnectionError:
             raise serializers.ValidationError({'hook': 'Invalid hook url'})
-        return value
 
-    def validate_token(self, value):
-        if value != settings.SECRET_KEY:
-            raise serializers.ValidationError('Token incorrect')
-        return value
+        return attrs
 
     def create(self, validated_data):
         for page in validated_data['pages']:
