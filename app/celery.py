@@ -1,5 +1,5 @@
 import subprocess
-
+import json
 import requests
 from celery import Celery
 from rest_framework import status
@@ -23,8 +23,9 @@ def get_critical_css(css, url, width, height, post_type, term_id, post_id, hook)
         response = {
             'content': stderr, 'status': status.HTTP_400_BAD_REQUEST
         }
+        code = 400
     else:
         response = generate_data_for_response(post_type, term_id, post_id, stdout)
-        print(response)
-    requests.post(hook, data=response, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
-    return True
+        code = 200
+    requests.post(hook, data=json.dumps(response), headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'})
+    return code
