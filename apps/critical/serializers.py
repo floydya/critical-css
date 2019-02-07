@@ -15,12 +15,16 @@ class PageSerializer(serializers.Serializer):
     url = serializers.CharField(required=True)
 
     def validate(self, attrs):
-        if not (attrs.get('post_type', None) or attrs.get('term_id', None) or attrs.get('post_id', None)):
+        if not (
+            attrs.get('post_type', None) or
+            attrs.get('term_id', None) or
+            attrs.get('post_id', None)
+        ):
             raise serializers.ValidationError('post_type or term_id or post_id are empty.')
         try:
             status_code = requests.get(attrs['url'], timeout=2).status_code
-        except requests.ConnectTimeout:
-            status_code = "@Connection timeout@"
+        except requests.ConnectionError:
+            status_code = "@Connection error/timeout@"
         if status_code != 200:
             raise serializers.ValidationError({'url': f'Returned {status_code} response.'})
         return attrs
@@ -38,8 +42,8 @@ class CriticalSerializer(serializers.Serializer):
         try:
             response = requests.get(value, timeout=2)
             if response.status_code != 200:
-                raise requests.ConnectTimeout
-        except requests.ConnectTimeout:
+                raise requests.ConnectionError
+        except requests.ConnectionError:
             raise serializers.ValidationError({'hook': 'Invalid hook url'})
         return value
 

@@ -14,3 +14,7 @@ class Application(models.Model):
     hook_url = models.URLField(_("Hook URL"))
     style_url = models.URLField(_("Style URL"))
     token = models.UUIDField(default=uuid4, editable=False)
+
+    class Meta:
+        verbose_name = _("application")
+        verbose_name_plural = _("Applications")
