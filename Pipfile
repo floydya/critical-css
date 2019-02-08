@@ -13,6 +13,7 @@ gevent = "*"
 requests = "*"
 django-rest-swagger = "*"
 celery = "*"
+django-jinja = "*"
 
 [requires]
 python_version = "3.6.7"

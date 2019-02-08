@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from apps.critical.views import CriticalAPIView
+from apps.new_critical.views import CriticalAPIView
 
 
 urlpatterns = [
@@ -31,5 +31,6 @@ API_VERSION = getattr(settings, 'API_VERSION', 1)
 API_BASE_URL = f'api/v{API_VERSION}/'
 
 urlpatterns += [
-    path(f'{API_BASE_URL}', include('apps.auth.api.urls'))
+    path('', include('apps.auth.api.urls')),
+    path(f'{API_BASE_URL}', include('apps.application.api.urls')),
 ]

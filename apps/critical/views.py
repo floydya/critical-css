@@ -1,5 +1,5 @@
 # from rest_framework import exceptions
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.generics import CreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -19,7 +19,9 @@ class CriticalAPIView(APIView):
         return Response({'status': 'In process'})
 
     def get(self, request, *args, **kwargs):
-        return render(request, template_name='index.html')
+        if not request.user.is_authenticated:
+            return redirect('auth:login')
+        return render(request, template_name='index.jinja')
 
 
 class _CriticalAPIView(CreateAPIView):

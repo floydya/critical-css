@@ -1,4 +1,6 @@
 import os
+import jinja2
+from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -15,8 +17,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_jinja',
     'rest_framework',
-    'apps.critical',
+
+    # 'apps.critical',
+    'apps.new_critical',
+    'apps.application',
 ]
 
 MIDDLEWARE = [
@@ -32,18 +38,49 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
+{
+        'BACKEND': 'django_jinja.backend.Jinja2',
+        'NAME': 'jinja2',
         'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'OPTIONS': {
+            'environment': 'app.jinja2.environment',
+            'match_extension': '.jinja',
+            'newstyle_gettext': True,
+            'auto_reload': True,
+            'undefined': jinja2.Undefined,
+            'debug': True,
+            'filters': {},
+            'globals': {},
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'extensions': DEFAULT_EXTENSIONS,
+            "bytecode_cache": {
+                "name": "default",
+                "backend": "django_jinja.cache.BytecodeCache",
+                "enabled": True,
+            },
+        },
+    },
+    {
+        'DIRS': [],
+        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.contrib.auth.context_processors.auth',
             ],
         },
     },
@@ -89,6 +126,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_SCHEME', 'https')
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_SCHEME', 'https')
