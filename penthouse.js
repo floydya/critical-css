@@ -18,7 +18,8 @@ fetch(css_url)
             url: site_url,
             cssString: body,
             width: width,
-            height: height
+            height: height,
+            customPageHeaders: {"Penthouse": "critical-css"}
         }).then(criticalCss => {
             console.log(criticalCss)
         })
